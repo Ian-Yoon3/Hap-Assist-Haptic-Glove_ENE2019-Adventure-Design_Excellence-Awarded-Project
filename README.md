@@ -142,7 +142,7 @@ The Arduino Uno and the laptop were not part of this budget.
 | `HandLandmarkerRunner.cs` | Modified sample from MediaPipeUnityPlugin (see Credits) |
 | `hap_assist_firmware.ino` | Arduino firmware |
 
-Comments in the Unity scripts are written in Korean.
+The comments and log messages in the Unity scripts were translated from Korean to English. The code itself is unchanged.
 
 ## How to run
 

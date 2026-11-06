@@ -1,15 +1,15 @@
 using UnityEngine;
-using System.IO.Ports; //  시리얼 통신 라이브러리
+using System.IO.Ports; // Serial communication library
 using System;
 
 public class ArduinoConnector : MonoBehaviour
 {
-    // 어디서든 부를 수 있게 '싱글톤'으로 만듭니다
+    // Singleton so that any script can reach the connector
     public static ArduinoConnector Instance;
 
-    [Header("포트 설정")]
-    public string portName = "COM5"; //  내 컴퓨터 포트번호로 꼭 바꿔야 함!
-    public int baudRate = 9600;      // 통신 속도
+    [Header("Port Settings")]
+    public string portName = "COM5"; // Change this to the COM port of your Arduino
+    public int baudRate = 9600;      // Must match the firmware baud rate
 
     private SerialPort stream;
 
@@ -31,21 +31,21 @@ public class ArduinoConnector : MonoBehaviour
             stream = new SerialPort(portName, baudRate);
             stream.ReadTimeout = 50;
             stream.Open();
-            Debug.Log($"아두이노 연결 성공! ({portName})");
+            Debug.Log($"Arduino connected ({portName})");
         }
         catch (Exception e)
         {
-            Debug.LogWarning($"연결 실패: {e.Message} (포트 번호를 확인하거나 아두이노 IDE를 꺼주세요)");
+            Debug.LogWarning($"Connection failed: {e.Message} (check the port number or close the Arduino IDE)");
         }
     }
 
-    // 신호를 보내는 함수
+    // Sends a command string to the Arduino
     public void Send(string signal)
     {
         if (stream != null && stream.IsOpen)
         {
             stream.Write(signal);
-            // Debug.Log($"[전송] {signal}"); // 로그가 너무 많으면 주석 처리
+            // Debug.Log($"[SEND] {signal}"); // Commented out to avoid flooding the log
         }
     }
 

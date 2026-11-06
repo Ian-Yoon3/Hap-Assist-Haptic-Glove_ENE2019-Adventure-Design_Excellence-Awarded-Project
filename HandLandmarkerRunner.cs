@@ -15,7 +15,7 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection
   {
     [SerializeField] public HandLandmarkerResultAnnotationController HandLandmarkerResultAnnotationController;
 
-        public HandLandmarkerResult handLandmarkerResult; //[추가 1] 여기에 결과를 저장할 '공개 변수'를 만듭니다!f
+        public HandLandmarkerResult handLandmarkerResult; // [Modified] Public field that stores the latest detection result
 
         private Experimental.TextureFramePool _textureFramePool;
 
@@ -30,12 +30,12 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection
 
     protected override IEnumerator Run()
     {
-            // [여기부터] 이 4줄을 복사해서 붙여넣으세요!
-            config.MinHandDetectionConfidence = 0.4f;  // 인식 장벽 낮추기 (잘 잡힘)
-            config.MinTrackingConfidence = 0.5f;       // 추적 유지력
+            // [Modified] Lower the confidence thresholds to improve detection
+            config.MinHandDetectionConfidence = 0.4f;  // Lower detection threshold
+            config.MinTrackingConfidence = 0.5f;       // Tracking threshold
          
-            Debug.Log(" 인식률 향상 설정이 강제로 적용되었습니다!");
-            // [여기까지] 
+            Debug.Log("Custom confidence thresholds applied");
+            // [End of modification]
             Debug.Log($"Delegate = {config.Delegate}");
       Debug.Log($"Image Read Mode = {config.ImageReadMode}");
       Debug.Log($"Running Mode = {config.RunningMode}");
@@ -166,7 +166,7 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection
         {
             this.handLandmarkerResult = result;
 
-            //  화가가 없으면 그리지 말고 넘어가라!
+            // [Modified] Skip drawing when no annotation controller is assigned
             if (HandLandmarkerResultAnnotationController != null)
             {
                 HandLandmarkerResultAnnotationController.DrawLater(result);
